@@ -1,5 +1,9 @@
 export class Formateur {
 
+    constructor() {
+        console.log("Je suis le formateur n°", Math.random())
+    }
+
     formatNumber(initialValue: string, length: number, groupLength: number,
         whileHaveSpace: boolean = true) {
 

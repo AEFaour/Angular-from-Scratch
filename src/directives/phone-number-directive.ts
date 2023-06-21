@@ -2,18 +2,20 @@ import { Formateur } from "../services/formateur";
 
 export class PhoneNumberDirective {
     static selector = "[phone-number]";
-    whileHaveSpace:boolean=true;
+    whileHaveSpace: boolean = true;
     borderColor: string = "gold";
+    
 
-    constructor(public element: HTMLElement) { }
+    constructor(public element: HTMLElement, private formateur : Formateur) {
+     }
 
     init() {
-        
-        if(this.element.hasAttribute('with-space')){
+
+        if (this.element.hasAttribute('with-space')) {
             this.whileHaveSpace = this.element.getAttribute('with-spaces') === "true";
             console.log(this.whileHaveSpace);
         }
-        if(this.element.hasAttribute('border-color')){
+        if (this.element.hasAttribute('border-color')) {
             this.borderColor = this.element.getAttribute('border-color')!;
             console.log(this.borderColor);
         }
@@ -25,12 +27,12 @@ export class PhoneNumberDirective {
     }
 
     formatNumber(element: HTMLInputElement) {
-        const formateur = new Formateur();
-       element.value = formateur.formatNumber(
-        element.value,
-        10, 
-        2, 
-        this.whileHaveSpace
+       
+        element.value = this.formateur.formatNumber(
+            element.value,
+            10,
+            2,
+            this.whileHaveSpace
         );
     }
 }
