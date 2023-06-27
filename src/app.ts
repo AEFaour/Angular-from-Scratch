@@ -5,9 +5,16 @@ import { Formateur } from "./services/formateur";
 
 
 const directives = [PhoneNumberDirective, CreditCardDirective];
-
-const formateur = new Formateur();
-const verifier = new CreditCardVerifier();
+const providers = [
+    {
+        provide: "formateur",
+        construct : () => new Formateur(),
+    },
+    {
+        provide: "verifier",
+        construct : () => new CreditCardVerifier(),
+    }
+]
 
 directives.forEach(directive => {
     const elements = document.querySelectorAll<HTMLElement>(directive.selector);
@@ -29,15 +36,14 @@ function analyseDirectiveConstructor(directive, element: HTMLElement) {
     const params = paramsNames.map(name => {
         if (name === "element") {
             return element;
-        }
+        } 
 
-        if (name === "formateur") {
-            return formateur;
+        const provider = providers.find(p=> p.provide === name);
+        if(!provider) {
+            throw new Error("Aucun fournisseur n'existe pour le service " + name);
         }
-
-        if (name === "verifier") {
-            return verifier;
-        }
+        const instance = provider.construct();
+        return instance;
     })
 
     return params;
