@@ -1,11 +1,14 @@
+import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
 export class CreditCardDirective {
     static selector = "[credit-card]";
 
-    constructor(public element: HTMLElement, private formateur : Formateur) {
-       
-     }
+    constructor(public element: HTMLElement,
+        private formateur: Formateur,
+        private verifier: CreditCardVerifier) {
+
+    }
 
     init() {
         this.element.style.borderColor = "silver";

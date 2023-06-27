@@ -1,13 +1,16 @@
+import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
 export class PhoneNumberDirective {
     static selector = "[phone-number]";
     whileHaveSpace: boolean = true;
     borderColor: string = "gold";
-    
 
-    constructor(public element: HTMLElement, private formateur : Formateur) {
-     }
+
+    constructor(public element: HTMLElement,
+        private formateur: Formateur,
+        private verifier: CreditCardVerifier) {
+    }
 
     init() {
 
@@ -27,7 +30,7 @@ export class PhoneNumberDirective {
     }
 
     formatNumber(element: HTMLInputElement) {
-       
+
         element.value = this.formateur.formatNumber(
             element.value,
             10,
