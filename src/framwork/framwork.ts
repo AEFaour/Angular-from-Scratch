@@ -1,13 +1,15 @@
+import { Module, ProvidersMetadata, ServiceInstances } from "../types";
+
 export class Framwork {
 
     directives: any[] = [];
-    services: { name: string, instance: any }[] = [];
-    providers: { provide: string, construct: Function }[] = [];
+    services: ServiceInstances = [];
+    providers: ProvidersMetadata = [];
 
     /**
      * Le traitement d'instancier les directives et les pindings
      */
-    bootstrapApplication(metadata: { providers?: any[], declarations: any[] }) {
+    bootstrapApplication(metadata: Module) {
         this.providers = metadata.providers || [];
         this.directives = metadata.declarations
         this.directives.forEach(directive => {

@@ -4,6 +4,7 @@ import { Angular } from "./framwork/framwork";
 import { CreditCardVerifier } from "./services/credit-card-verifier";
 import { Formateur } from "./services/formateur";
 
+
 Angular.bootstrapApplication({
     declarations: [
         PhoneNumberDirective,
