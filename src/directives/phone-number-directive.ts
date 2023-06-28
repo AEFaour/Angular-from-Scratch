@@ -1,14 +1,17 @@
+import { Directive } from "../decorators/directive";
 import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
-export class PhoneNumberDirective {
-    static selector = "[phone-number]";
-    static providers = [
+@Directive({
+    selector: "[phone-number]",
+    providers : [
         {
             provide: "formateur",
             construct: () => new Formateur("spécifique")
         },
-    ];
+    ]
+})
+export class PhoneNumberDirective {
 
     whileHaveSpace: boolean = true;
     borderColor: string = "gold";

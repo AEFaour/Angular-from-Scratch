@@ -1,8 +1,11 @@
+import { Directive } from "../decorators/directive";
 import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
+@Directive({
+    selector: "[credit-card]",
+})
 export class CreditCardDirective {
-    static selector = "[credit-card]";
 
     constructor(public element: HTMLElement,
         private formateur: Formateur,

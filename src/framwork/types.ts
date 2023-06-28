@@ -16,3 +16,8 @@ export type Module = {
     declarations: any[];
     providers?: ProvidersMetadata;
 }
+
+export type DirectiveMetadata = {
+    selector: string;
+    providers?: ProvidersMetadata;
+}

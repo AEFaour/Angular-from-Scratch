@@ -1,4 +1,4 @@
-import { Module, ProvidersMetadata, ServiceInstances } from "../types";
+import { Module, ProvidersMetadata, ServiceInstances } from "./types";
 
 export class Framwork {
 
@@ -17,7 +17,7 @@ export class Framwork {
 
             elements.forEach(element => {
                 const params = this.analyseDirectiveConstructor(directive, element);
-                const directiveInstance: any = Reflect.construct(directive, params);
+                const directiveInstance : any = Reflect.construct(directive, params);
                 directiveInstance.init();
 
             })
