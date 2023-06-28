@@ -1,7 +1,7 @@
 export class Formateur {
 
-    constructor() {
-        console.log("Je suis le formateur n°", Math.random())
+    constructor(name: string) {
+        console.log("Je suis le formateur n°", name)
     }
 
     formatNumber(initialValue: string, length: number, groupLength: number,

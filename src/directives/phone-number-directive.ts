@@ -3,6 +3,13 @@ import { Formateur } from "../services/formateur";
 
 export class PhoneNumberDirective {
     static selector = "[phone-number]";
+    static providers = [
+        {
+            provide: "formateur",
+            construct: () => new Formateur("spécifique")
+        },
+    ];
+
     whileHaveSpace: boolean = true;
     borderColor: string = "gold";
 
