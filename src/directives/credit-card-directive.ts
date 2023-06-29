@@ -1,4 +1,5 @@
 import { Directive } from "../decorators/directive";
+import { Input } from "../decorators/input";
 import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
@@ -7,14 +8,13 @@ import { Formateur } from "../services/formateur";
 })
 export class CreditCardDirective {
 
-    constructor(public element: HTMLElement,
-        private formateur: Formateur,
-        private verifier: CreditCardVerifier) {
+    @Input("border-color")
+    borderColor: string = "silver";
 
-    }
+    constructor(public element: HTMLElement, private formateur: Formateur, private verifier: CreditCardVerifier) {}
 
     init() {
-        this.element.style.borderColor = "silver";
+        this.element.style.borderColor = this.borderColor;
         this.element.addEventListener('input', (event) => {
             const element = event.target as HTMLInputElement;
             this.formatCardNumber(element);

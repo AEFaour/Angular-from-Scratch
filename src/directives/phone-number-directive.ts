@@ -1,10 +1,12 @@
 import { Directive } from "../decorators/directive";
+import { HostListener } from "../decorators/hostListener";
+import { Input } from "../decorators/input";
 import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
 @Directive({
     selector: "[phone-number]",
-    providers : [
+    providers: [
         {
             provide: "formateur",
             construct: () => new Formateur("spécifique")
@@ -12,8 +14,9 @@ import { Formateur } from "../services/formateur";
     ]
 })
 export class PhoneNumberDirective {
-
+    @Input("with-space")
     whileHaveSpace: boolean = true;
+    @Input("border-color")
     borderColor: string = "gold";
 
 
@@ -23,22 +26,10 @@ export class PhoneNumberDirective {
     }
 
     init() {
-
-        if (this.element.hasAttribute('with-space')) {
-            this.whileHaveSpace = this.element.getAttribute('with-spaces') === "true";
-            console.log(this.whileHaveSpace);
-        }
-        if (this.element.hasAttribute('border-color')) {
-            this.borderColor = this.element.getAttribute('border-color')!;
-            console.log(this.borderColor);
-        }
         this.element.style.borderColor = this.borderColor;
-        this.element.addEventListener('input', (event) => {
-            const element = event.target as HTMLInputElement;
-            this.formatNumber(element);
-        })
     }
 
+    @HostListener("input", ["event.target"])
     formatNumber(element: HTMLInputElement) {
 
         element.value = this.formateur.formatNumber(
