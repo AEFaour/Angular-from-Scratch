@@ -15,8 +15,13 @@ import { Formateur } from "../services/formateur";
     ]
 })
 export class PhoneNumberDirective {
+    static bindings = [ 
+        { propName: 'borderColor', attrName: 'style.borderColor'},
+        { propName: 'placeholderText', attrName: 'placeholder'}
+    ]
     @Input("with-space")
     whileHaveSpace: boolean = true;
+
     @Input("border-color")
     @HostBinding("style.borderColor")
     borderColor: string = "gold";
@@ -29,6 +34,18 @@ export class PhoneNumberDirective {
         private verifier: CreditCardVerifier) {
     }
 
+    @HostListener("click")
+    onClick() {
+        this.placeholderText = "Hello Faucon !";
+
+        this.placeholderText = "Hello Soleil !";
+
+        this.borderColor = "blue";
+
+        this.borderColor = "red";
+
+        this.placeholderText = "Hello Eclaire !";
+    }
 
     @HostListener("input", ["event.target"])
     formatNumber(element: HTMLInputElement) {

@@ -1,4 +1,6 @@
+import { Detector } from "./change-detector";
 import { Module, ProvidersMetadata, ServiceInstances } from "./types";
+import set from "lodash/set";
 
 export class Framwork {
 
@@ -18,7 +20,23 @@ export class Framwork {
             elements.forEach(element => {
                 const params = this.analyseDirectiveConstructor(directive, element);
                 const directiveInstance : any = Reflect.construct(directive, params);
-                directiveInstance.init();
+                const proxy = new Proxy(directiveInstance, {
+                    set(target, propName: string, value, proxy) {
+                        target[propName] = value;
+                        if(!directive.bindings) {
+                            return true;
+                        }
+                        const binding = directive.bindings.find(b => b.propName === propName);
+                        if(!binding) {
+                            return true;
+                        }
+                        Detector.addBinding(element, binding.attrName, value);
+                        //console.log(`On a mis à jour ${propName.toString} avec la valeur ${value}`);
+                        //set(target.element, binding.attrName, value);
+                        return true;
+                    }
+                });
+                proxy.init();
 
             })
         });
