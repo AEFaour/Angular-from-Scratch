@@ -12,7 +12,6 @@ export function HostListener(eventName: string, params: (string|number)[] = []){
             });
 
         }
-
       
     }
 

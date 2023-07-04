@@ -1,4 +1,5 @@
 import { Directive } from "../decorators/directive";
+import { HostBinding } from "../decorators/host-binding";
 import { HostListener } from "../decorators/hostListener";
 import { Input } from "../decorators/input";
 import { CreditCardVerifier } from "../services/credit-card-verifier";
@@ -17,17 +18,17 @@ export class PhoneNumberDirective {
     @Input("with-space")
     whileHaveSpace: boolean = true;
     @Input("border-color")
+    @HostBinding("style.borderColor")
     borderColor: string = "gold";
 
+    @HostBinding("placeholder")
+    placeholderText: string = "Hello world";
 
     constructor(public element: HTMLElement,
         private formateur: Formateur,
         private verifier: CreditCardVerifier) {
     }
 
-    init() {
-        this.element.style.borderColor = this.borderColor;
-    }
 
     @HostListener("input", ["event.target"])
     formatNumber(element: HTMLInputElement) {
