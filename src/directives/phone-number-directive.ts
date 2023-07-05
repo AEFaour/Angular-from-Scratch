@@ -2,6 +2,7 @@ import { Directive } from "../decorators/directive";
 import { HostBinding } from "../decorators/host-binding";
 import { HostListener } from "../decorators/hostListener";
 import { Input } from "../decorators/input";
+import { Detector } from "../framwork/change-detector";
 import { CreditCardVerifier } from "../services/credit-card-verifier";
 import { Formateur } from "../services/formateur";
 
@@ -36,15 +37,9 @@ export class PhoneNumberDirective {
 
     @HostListener("click")
     onClick() {
-        this.placeholderText = "Hello Faucon !";
-
-        this.placeholderText = "Hello Soleil !";
-
-        this.borderColor = "blue";
-
-        this.borderColor = "red";
-
+       
         this.placeholderText = "Hello Eclaire !";
+        Detector.digest();
     }
 
     @HostListener("input", ["event.target"])
