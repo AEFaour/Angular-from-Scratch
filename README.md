@@ -1,1 +1,1 @@
-"# Angular-from-Scratch" 
+# Angular-from-Scratch
