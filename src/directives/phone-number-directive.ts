@@ -16,12 +16,16 @@ import { Formateur } from "../services/formateur";
     ]
 })
 export class PhoneNumberDirective {
-    static bindings = [ 
-        { propName: 'borderColor', attrName: 'style.borderColor'},
-        { propName: 'placeholderText', attrName: 'placeholder'}
-    ]
+    /*static bindings = [
+        { propName: 'borderColor', attrName: 'style.borderColor' },
+        { propName: 'placeholderText', attrName: 'placeholder' },
+        { propName: "value", attrName: "value" },
+    ]*/
     @Input("with-space")
     whileHaveSpace: boolean = true;
+
+    @HostBinding("value")
+    value: string = "";
 
     @Input("border-color")
     @HostBinding("style.borderColor")
@@ -37,19 +41,11 @@ export class PhoneNumberDirective {
 
     @HostListener("click")
     onClick() {
-       
         this.placeholderText = "Hello Eclaire !";
-        Detector.digest();
     }
 
-    @HostListener("input", ["event.target"])
-    formatNumber(element: HTMLInputElement) {
-
-        element.value = this.formateur.formatNumber(
-            element.value,
-            10,
-            2,
-            this.whileHaveSpace
-        );
+    @HostListener("input", ["event.target.value"])
+    formatNumber(value: string) {
+        this.value = this.formateur.formatNumber( value, 10, 2, this.whileHaveSpace);
     }
 }
