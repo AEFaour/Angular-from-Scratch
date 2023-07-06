@@ -16,11 +16,6 @@ import { Formateur } from "../services/formateur";
     ]
 })
 export class PhoneNumberDirective {
-    /*static bindings = [
-        { propName: 'borderColor', attrName: 'style.borderColor' },
-        { propName: 'placeholderText', attrName: 'placeholder' },
-        { propName: "value", attrName: "value" },
-    ]*/
     @Input("with-space")
     whileHaveSpace: boolean = true;
 

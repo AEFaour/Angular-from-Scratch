@@ -10,9 +10,6 @@ export function HostListener(eventName: string, params: (string|number)[] = []){
                 const element = event.paramsToSend;
                 this[methodName](...paramsToSend);
             });
-
         }
-      
     }
-
 }
