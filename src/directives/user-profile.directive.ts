@@ -16,7 +16,19 @@ export class UserProfileDirective {
     constructor(public element: HTMLElement) {}
 
     init(){
-        console.log(this.firstName);
+       this.render();
+
+        this.element.querySelector('button').addEventListener('click', () => {
+            this.firstName = "Gloire",
+            this.render();
+        });
+    }
+    render( ){
+        this.element.innerHTML = `
+        <h3>${this.firstName} ${this.lastName}</h3>
+        <strong>Poste : </strong> ${this.job}
+        <button>Changer le prénom</button>
+        `;
     }
 
 }
