@@ -13,22 +13,31 @@ export class UserProfileDirective {
     @Input('job')
     job: string;
 
-    constructor(public element: HTMLElement) {}
+    template = `
+    <h3>{{firstName}} {{lastName}}</h3>
+    <strong>Poste : </strong> {{job}}
+    <button>Changer le prénom</button>
+    `;
 
-    init(){
-       this.render();
+    constructor(public element: HTMLElement) { }
+
+    init() {
+        this.render();
 
         this.element.querySelector('button').addEventListener('click', () => {
             this.firstName = "Gloire",
-            this.render();
+                this.render();
         });
     }
-    render( ){
-        this.element.innerHTML = `
-        <h3>${this.firstName} ${this.lastName}</h3>
-        <strong>Poste : </strong> ${this.job}
-        <button>Changer le prénom</button>
-        `;
+    render() {
+        let renderedTemplate = this.template;
+        this.template.match(/{{.*?}}/g).forEach(interpolation => {
+            const propName = interpolation.replace(/{{|}}/g, '').trim();
+            
+            renderedTemplate = renderedTemplate.replace(interpolation, this[propName]);
+        });
+        
+        this.element.innerHTML = renderedTemplate;
     }
 
 }
