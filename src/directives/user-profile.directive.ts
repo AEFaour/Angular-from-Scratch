@@ -23,11 +23,6 @@ export class UserProfileDirective {
 
     init() {
         this.render();
-
-        this.element.querySelector('button').addEventListener('click', () => {
-            this.firstName = "Gloire",
-                this.render();
-        });
     }
     render() {
         let renderedTemplate = this.template;
@@ -44,28 +39,44 @@ export class UserProfileDirective {
         }[] = [];
         this.template.match(/<.*? \(.*?\)=\".*?\".*?>/g).forEach(
             (baliseOuverante) => {
-                const randomId="event-listener-"+ Math.ceil(Math.random() * 1000);
+                const randomId = "event-listener-" + Math.ceil(Math.random() * 1000);
                 console.log(randomId);
                 baliseOuverante.match(/\(.*?\)=\".*?\"/g).forEach(
                     (event) => {
                         const eventName = event.match(/\(.*?\)/)[0].replace(/\(|\)/g, '');
                         console.log(eventName)
                         const methodName = event.match(/\".*?\"/g)[0].replace(/\"/g, '');
-                        console.log(methodName)
-                    }
-                );
-            }
-        );
+                        console.log(methodName);
+                        eventsToBind.push({
+                            elementId: randomId,
+                            eventName, methodName
+                        });
+                    });
+                const finalBaliseOuvrante = baliseOuverante
+                    .replace(/\(.*?\)=\".*?\"/g, '')
+                    .replace(/>/g, `id="${randomId}">`);
+                renderedTemplate = renderedTemplate.replace(baliseOuverante, finalBaliseOuvrante);
+            });
+        console.log(renderedTemplate);
+        console.log(eventsToBind);
 
         this.element.innerHTML = renderedTemplate;
+
+        console.log(eventsToBind);
+
+        eventsToBind.forEach(eventToBind => {
+            this.element.querySelector('#' + eventToBind.elementId).addEventListener(eventToBind.eventName, () => {
+                this[eventToBind.methodName]();
+                this.render();
+            });
+        });
     }
 
     onClickButton() {
-        this.firstName = "Gloire",
-            this.render();
+        this.firstName = "Gloire";
     }
     onDbClickButton() {
-        console.log("Double Click");
+        this.firstName = "Soleil";
     }
 
     onClickH3() {
